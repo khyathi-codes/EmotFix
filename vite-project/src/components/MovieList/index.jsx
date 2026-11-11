@@ -5,7 +5,7 @@
 // export default function MovieList() {
 //   const { mood } = useParams(); // route /movies/:mood
 //   const [movies, setMovies] = useState([]);
-//   const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+//   const BASE = import.meta.env.VITE_API_BASE || 'https://emotfix-backend.onrender.com';
 
 //   useEffect(() => {
 //     async function load() {

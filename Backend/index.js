@@ -37,7 +37,8 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: "GET,PUT,POST,DELETE"
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
@@ -58,19 +59,18 @@ app.use('/api/users', route);
 app.use("/api/reviews", reviewrouter);
 console.log(" Routes mounted at /api/movies");
 
-const mongo_URI = process.env.MongoDb_URI
-const port = process.env.PORT
+const mongo_URI = process.env.MongoDb_URI;
+const port = process.env.PORT || 5001;
 
-mongoose.connect(mongo_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true,
-  tlsAllowInvalidCertificates: true
-})
+if (!mongo_URI) {
+  console.error("❌ Error: MongoDb_URI is not defined in .env file");
+}
+
+mongoose.connect(mongo_URI)
   .then(() => {
     console.log("MongoDb Connected Successfully")
     app.listen(port, () => {
-      console.log("Server Started")
+      console.log(`Server Started on port ${port}`)
     })
   })
   .catch((e) => {

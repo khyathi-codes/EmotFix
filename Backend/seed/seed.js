@@ -1124,12 +1124,7 @@ const seedMovies = [
 
 async function seed() {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      ssl: true,
-      tlsAllowInvalidCertificates: true
-    });
+    await mongoose.connect(uri);
 
     console.log('✅ Connected to MongoDB');
     console.log('🧹 Clearing old movies...');
@@ -1139,7 +1134,7 @@ async function seed() {
     await MovieModel.insertMany(seedMovies);
 
     console.log('📊 Creating database indexes...');
-    await MovieModel.collection.createIndexes();
+    await MovieModel.createIndexes();
 
     console.log('✅ Movies seeded successfully!');
     process.exit();
